@@ -1,0 +1,51 @@
+---
+- name: Add Docker GPG apt Key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Add Docker Repository
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu jammy stable
+    state: present
+
+- name: Install docker
+  apt:
+    name:
+    - docker-ce
+    - docker-ce-cli
+    - containerd.io
+    state: latest
+    update_cache: true
+
+- name: Make directory for docker plugins
+  file:
+    path: /usr/lib/docker/cli-plugins
+    state: directory
+    mode: 0755
+
+- name: GET docker compose plugin
+  get_url:
+    url: https://github.com/docker/compose/releases/download/v2.6.0/docker-compose-linux-x86_64
+    dest: /usr/lib/docker/cli-plugins/docker-compose
+    mode: 0755
+
+- name: Ensure docker group exists
+  group:
+    name: docker
+    state: present
+
+- name: Add user to docker group
+  user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: yes
+
+- name: Copy docker daemon config
+  copy:
+    dest: /etc/docker/daemon.json
+    content: |
+      {
+        "live-restore": true
+      }
+  notify: restart_docker

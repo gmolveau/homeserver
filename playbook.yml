@@ -1,0 +1,33 @@
+---
+- hosts: all
+  vars_files:
+    - vars.yaml
+  tasks:
+  - import_tasks: tasks/sudo/apt.yml
+    become: true
+  - import_tasks: tasks/sudo/ssh.yml
+    become: true
+  - import_tasks: tasks/sudo/ufw.yml
+    become: true
+  - import_tasks: tasks/sudo/docker.yml
+    become: true
+  - import_tasks: tasks/sudo/ddclient.yml
+    become: true
+  - import_tasks: tasks/sudo/plexmediaserver.yml
+    become: true
+  - import_tasks: tasks/user/apt.yml
+  - import_tasks: tasks/user/docker_apps.yml
+  handlers:
+  - name: restart_sshd
+    service:
+      name: sshd
+      state: restarted
+  - name: restart_ddclient
+    systemd:
+      name: ddclient
+      state: restarted
+      enabled: yes
+  - name: restart_docker
+    service:
+      name: docker
+      state: restarted

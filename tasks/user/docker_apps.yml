@@ -1,0 +1,5 @@
+---
+- name: Clone selfhosted-apps-docker git repo
+  ansible.builtin.git:
+    repo: https://github.com/gmolveau/selfhosted-apps-docker.git
+    dest: "~/selfhosted-apps-docker"

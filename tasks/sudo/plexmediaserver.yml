@@ -1,0 +1,6 @@
+---
+- name: UFW - Open plexmediaserver port
+  community.general.ufw:
+    rule: allow
+    port: '32400'
+    proto: tcp

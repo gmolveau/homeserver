@@ -1,0 +1,6 @@
+---
+- name: Create update script
+  copy:
+    dest: "~/update.sh"
+    content: |
+      sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt-get dist-upgrade -y
