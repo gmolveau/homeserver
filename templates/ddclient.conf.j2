@@ -1,0 +1,8 @@
+# /etc/ddclient.conf
+
+protocol=dyndns2
+use=web, web=checkip.dyndns.com
+server=www.ovh.com
+login={{ zone_login }}
+password='{{ zone_password }}'
+{{ zone_domain }}

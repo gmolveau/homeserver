@@ -1,0 +1,16 @@
+---
+- name: "Install ddclient"
+  apt:
+    name: ddclient
+    state: latest
+    update-cache: yes
+
+- name: "Apply configuration"
+  template:
+    src: templates/ddclient.conf.j2
+    dest: /etc/ddclient.conf
+    backup: yes
+    group: root
+    owner: root
+    mode: 0600
+  notify: restart_ddclient
