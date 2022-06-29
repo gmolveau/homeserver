@@ -6,3 +6,7 @@
 ```bash
 ansible-playbook -i hosts.ini --ask-become-pass playbook.yml
 ```
+
+## TODO
+
+- use ansible roles
